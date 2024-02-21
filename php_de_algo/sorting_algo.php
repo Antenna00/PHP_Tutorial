@@ -45,10 +45,76 @@ function insertionSortDecend($arr) : array {
     return $arr;
 }
 
-function mergeSort($arr) : array {
+/*
+ * Merge Sort
+ * Merge Sort is divide and conquer approach. 
+ * This method divides an array to 2 subarrays recursively until each subarray holds 2 items.
+ * Then, 2 items are compared, sorted and merged back to the parent subarray or original array. 
+ * 
+*/
+function merge(&$arr, $left, $middle, $right) {
+    //^get the number of elements in each subarrays
+    $arrACount = $middle - $left + 1;
+    $arrBCount = $right - $middle;
+
+    //^Temporary array to store subarray
+    $leftTemp = array();
+    $rightTemp = array();
+
+    //^copy data to temporary subarray. Divide subarray to another subarray
+    for($i = 0; $i < $arrACount; $i++) 
+        $leftTemp[$i] = $arr[$left + $i];
     
-    return $arr;
+    for($j = 0; $j < $arrBCount; $j++)
+        $rightTemp[$j] = $arr[$middle + 1 + $j];
+
+    //^sort the array and put it back to original subarray.
+    $i = 0;
+    $j = 0;
+    $k = $left;
+
+    while($i < $arrACount && $j < $arrBCount) {
+        if($leftTemp[$i] <= $rightTemp[$j]) {
+            $arr[$k] = $leftTemp[$i];
+            $i++;
+        }else {
+            $arr[$k] = $rightTemp[$j];
+            $j++;
+        }
+        $k++;
+    }
+
+    while($i < $arrACount) {
+        $arr[$k] = $leftTemp[$i];
+        $k++;
+        $i++;
+    }
+
+    while($j < $arrBCount) {
+        $arr[$k] = $rightTemp[$j];
+        $k++;
+        $j++;
+    }
+}
+
+function mergeSort(&$arr, $left, $right) {
+    
+    //^check if array / subarray has an element
+    if($left < $right) {
+        //^calculate the middle index of subarray
+        $middle = $left + (int) (($right - $left) / 2); //!Left is required as subarray could start from not 0
+        
+        // Sort first and second halves
+        mergeSort($arr, $left, $middle); //^continue to divide until subarray consists 2 items / next recursion will be left == right 
+        mergeSort($arr, $middle + 1, $right);
+ 
+        merge($arr, $left, $middle, $right); 
+    }
 }
 
 print_r(insertionSort($anotherArr));
 print_r(insertionSortDecend($anotherArr));
+mergeSort($anotherArr, 0, count($anotherArr)-1);
+
+print_r($anotherArr);
+var_dump($anotherArr);
