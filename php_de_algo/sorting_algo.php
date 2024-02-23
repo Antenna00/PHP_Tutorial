@@ -5,7 +5,7 @@
 $inputArr = [3, 2, 4, 5, 102, 91, 1, 5];
 $anotherArr = [5, 2, 4, 6, 1, 3];
 
-//* Insertion Sort 
+//* Insertion Sort O(n^2)
 /*
  * The time-complexity is O(n^2) though, 
  * code is very tight thus constant factor in the running time is very small. 
@@ -46,7 +46,11 @@ function insertionSortDecend($arr) : array {
 }
 
 /*
- * Merge Sort
+*------------------------------------------------------
+*/
+/*
+
+ * Merge Sort O(nlogn)
  * Merge Sort is divide and conquer approach. 
  * This method divides an array to 2 subarrays recursively until each subarray holds 2 items.
  * Then, 2 items are compared, sorted and merged back to the parent subarray or original array. 
@@ -102,9 +106,11 @@ function mergeSort(&$arr, $left, $right) {
     //^check if array / subarray has an element
     if($left < $right) {
         //^calculate the middle index of subarray
+        //^When divided into subarrays, middle value is calculated. 
+        //^If number is odd, the ceiling number is taken.
         $middle = $left + (int) (($right - $left) / 2); //!Left is required as subarray could start from not 0
         
-        // Sort first and second halves
+        //^ Sort first and second halves
         mergeSort($arr, $left, $middle); //^continue to divide until subarray consists 2 items / next recursion will be left == right 
         mergeSort($arr, $middle + 1, $right);
  
@@ -112,9 +118,26 @@ function mergeSort(&$arr, $left, $right) {
     }
 }
 
+/*
+*------------------------------------------------------
+*/
+
+
+function heapify() {
+
+}
+
+function heapSort() {
+    
+}
+
+
 print_r(insertionSort($anotherArr));
 print_r(insertionSortDecend($anotherArr));
 mergeSort($anotherArr, 0, count($anotherArr)-1);
 
 print_r($anotherArr);
 var_dump($anotherArr);
+
+//^restate anotherArr
+$anotherArr = [5, 2, 4, 6, 1, 3];
